@@ -1,25 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route, BrowserRouter as Router, Outlet } from 'react-router-dom';
+import { useNavigate } from 'react-router';
+import IssuesList from './pages/IssueList';
+import IssueDetail from './pages/IssueDetail';
 
-function App() {
+const RedirectToIssues = () => {
+  let navigate = useNavigate();
+  React.useEffect(() => {
+    navigate("/openai/gpt-3/issues");
+  }, [navigate]);
+  return null;
+}
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<RedirectToIssues />} />
+        <Route path="/:owner/:repo/issues" element={<IssuesList />} />
+        <Route path="/:owner/:repo/issues/:issueNumber" element={<IssueDetail />} />
+      </Routes>
+    </Router>
   );
 }
 

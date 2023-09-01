@@ -1,26 +1,38 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route, BrowserRouter as Router, Outlet } from 'react-router-dom';
+import { useNavigate } from 'react-router';
+import IssuesList from './pages/IssueList';
+import IssueDetail from './pages/IssueDetail';
+import { ErrorBoundary } from 'react-error-boundary';
 
-function App() {
+
+const App = () => {
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<RedirectToIssues />} />
+          <Route path="/:owner/:repo/issues" element={<IssuesList />} />
+          <Route path="/issues/:issueNumber" element={<IssueDetail />} />
+        </Routes>
+      </Router>
+    </ErrorBoundary>
   );
 }
+
+const RedirectToIssues = () => {
+  let navigate = useNavigate();
+  React.useEffect(() => {
+    navigate("/facebook/react/issues");
+  }, []);
+  return null;
+}
+
+const ErrorFallback = () => {
+  return (<div>에러났어요@@</div>);
+}
+
 
 export default App;

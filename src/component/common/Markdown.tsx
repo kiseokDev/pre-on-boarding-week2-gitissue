@@ -2,8 +2,10 @@ import React from 'react';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import remarkGfm from 'remark-gfm';
 import { styled } from 'styled-components';
+import { IssueType } from '../../types/issues';
 
-const Markdown = ({ body }) => {
+type Props = Pick<IssueType, 'body'>;
+const Markdown = ({ body }:Props) => {
   const BodyContent = body;
 
   return (

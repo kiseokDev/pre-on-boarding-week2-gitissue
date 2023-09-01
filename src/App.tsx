@@ -15,7 +15,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<RedirectToIssues />} />
           <Route path="/:owner/:repo/issues" element={<IssuesList />} />
-          <Route path="/issues/:issueNumber" element={<IssueDetail />} />
+          <Route path="/:owner/:repo/issues/:issueNumber" element={<IssueDetail />} />
         </Routes>
       </Router>
     </ErrorBoundary>

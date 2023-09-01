@@ -1,19 +1,22 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { IssueType } from '../types/issues';
 import { styled } from 'styled-components';
 
-
 interface ListType {
     issue: IssueType;
+    urlParams: {
+      owner: string;
+      repo: string;
+    };
   }
 
-const IssueItem =  ({ issue }: ListType) => {
+const IssueItem =  ({ issue,urlParams }: ListType) => {
     const navigate = useNavigate();
     const createDate = issue.created_at?.split('T')[0];
 
     return (
       <ListContent
-        onClick={() => navigate(`/issues/${issue.number}`, { state: { issue } })}
+        onClick={() => navigate(`/${urlParams.owner}/${urlParams.repo}/issues/${issue.number}`, { state: { issue } })}
       >
         <TopContent>
           <Number>#{issue.number}</Number>

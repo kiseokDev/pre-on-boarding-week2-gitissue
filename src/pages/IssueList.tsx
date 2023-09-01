@@ -6,10 +6,12 @@ import infinityScroll from '../feature/infinityscroll';
 import Loading from '../component/common/Loading';
 import IssueItem from '../component/issueItem';
 import Ad from '../component/common/Ad';
+import { useParams } from 'react-router';
 
 
 const IssueListComponent: React.FC = () => {
     const { issues, isLoading, isError, fetchIssues } = useIssues();
+    const {owner = '', repo = ''} = useParams<{owner?: string; repo?: string}>();
     
   const getIssuesCallback = () => {
     if (!isLoading) {
@@ -27,7 +29,7 @@ const IssueListComponent: React.FC = () => {
             <ul>
                 {issues.sort((a, b) => b.comments - a.comments).map((issue, index) => (
                     <li key={issue.id}>
-                        <IssueItem issue={issue}  />
+                        <IssueItem issue={issue} urlParams={{owner,repo}} />
                         {(index + 1) % 4 === 0 && <Ad/>}
                     </li>
                 ))}

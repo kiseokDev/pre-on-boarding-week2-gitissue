@@ -1,9 +1,9 @@
 //instance.ts
-import axios from "axios";
+import Axios, { AxiosError, AxiosRequestConfig } from "axios";
 const BASE_URL = "https://api.github.com";
 const TOKEN = process.env.REACT_APP_GITHUB_ACCESS_TOKEN;
 
-const api = axios.create({
+const axiosInstance = Axios.create({
   baseURL: BASE_URL,
   headers: {
     Authorization: `${TOKEN}`,
@@ -11,7 +11,7 @@ const api = axios.create({
   },
 });
 
-api.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -24,4 +24,23 @@ api.interceptors.response.use(
   }
 );
 
-export default api;
+export const http = {
+  get: async function get<Response = unknown>(
+    url: string,
+    config?: AxiosRequestConfig
+  ): Promise<Response> {
+    return axiosInstance
+      .get<Response>(url, config)
+      .then(response => response.data) 
+      .catch((e: AxiosError) => {
+        if (e.response) {
+          throw new Error(String(e.response.data));
+        } else {
+          throw e;
+        }
+      });
+  },
+};
+
+export default http;
+

@@ -1,26 +1,19 @@
 // IssueDetail.tsx
 import React, { useEffect, useState } from 'react';
 import { getIssueDetail } from '../api/api';
+import { IssueType } from '../types/issues';
+import { useLocation } from 'react-router-dom';
 
-const IssueDetail = ({ match }: any) => {
-    const { owner, repo, issueNumber } = match.params;
-    const [issue, setIssue] = useState(null);
-
-    useEffect(() => {
-        const fetchIssueDetail = async () => {
-            const data = await getIssueDetail(owner, repo, parseInt(issueNumber));
-            setIssue(data);
-        }
-
-        fetchIssueDetail();
-    }, [owner, repo, issueNumber]);
+const IssueDetail = () => {
+    const location = useLocation();
+    const issue = location.state.issue;
 
     if (!issue) return <div>Loading...</div>;
 
     return (
         <div>
             helloworld
-            {/* <h2>{issue.title}</h2> */}
+            <h2>{issue.title}</h2>
             {/* <p>{issue.body}</p> */}
         </div>
     );

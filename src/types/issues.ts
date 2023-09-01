@@ -1,16 +1,53 @@
-type Issue = {
-  number: number; // 이슈번호
-  title: string; // 이슈제목
+type IssueType = {
+  url: string;
+  repository_url: string;
+  labels_url: string;
+  comments_url: string;
+  events_url: string;
+  html_url: string;
+  id: number;
+  node_id: string;
+  number: number;
+  title: string;
   user: {
-    login: string; // 작성자
-    avatar_url: string; // 작성자 프로필 이미지
+    login: string;
+    id: number;
+    node_id: string;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    followers_url: string;
+    following_url: string;
+    gists_url: string;
+    starred_url: string;
+    subscriptions_url: string;
+    organizations_url: string;
+    repos_url: string;
+    events_url: string;
+    received_events_url: string;
+    type: string;
+    site_admin: boolean;
   };
-  created_at: string; // 작성일
-  comments: number; // 코멘트 수
-  body: string; // 본문
-  state: "open" | "closed"; // 이슈 상태 (예: open, closed)
+  labels: object;
+  state: string;
+  locked: boolean;
+  assignee: object | null;
+  assignees: object;
+  milestone: object | null;
+  comments: number;
+  created_at: string;
+  updated_at: string;
+  closed_at: string | null;
+  author_association: string;
+  active_lock_reason: object | null;
+  body: string;
+  reactions: object;
+  timeline_url: string;
+  performed_via_github_app: object | null;
+  state_reason: object | null;// 이슈 상태 (예: open, closed)
 };
 
-type IssueList = Issue[];
+type IssueListType = IssueType[];
 
-export type {Issue, IssueList};
+export type {IssueType, IssueListType};
